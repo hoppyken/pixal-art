@@ -1,58 +1,45 @@
- //Select color input
- //Select size input
-
-
- //When size is submitted by the user, call makeGrid()
-
 function makeGrid() {
-
-// Your code goes here!
-
-
-const heightInput = $('#input_height');
-const widthInput = $('#input_width');
-const colorInput = $('#colorPicker');
- 
- makeGrid = () => {
- const pixelCanvas = $('#pixel_canvas'); 
-  const heightValue = $('#input_height').val();
-  const widthValue = $('#input_width').val();
-  pixelCanvas.innerText = "";
-  for (let h = 0; h < heightValue; ++h) {
-    const row = pixelCanvas.insertRow(-1);
-  for (let w = 0; w < widthValue; ++w) {
-      const cell = row.insertCell(-1);
-      cell.onclick = changeColor;
-    }
+  console.log("makeGrid is running!")
+  
+  // Select size input
+  
+  var canvas, cell, gridHeight, gridWidth, rows;
+  
+  canvas = $('#pixel_canvas');
+  gridHeight = $('#input_height').val();
+  gridWidth = $('#input_width').val();
+  
+  canvas.children().remove()
+  
+  for (x = 0; x < gridHeight; x++) {
+  canvas.append('<tr></tr>');
   }
+  
+  rows = $('tr');
+  
+  for (y = 0; y < gridWidth; y++) {
+  rows.append('<td></td>');
+  } 
+  
+  cell = canvas.find('td');
+  
+  // When td is clicked by the user, change color of td
+  cell.click(function() {
+    // Select color input
+    console.log("changeColor is running!");
+    var color;
+    color = $("#colorPicker").val();
+    $(this).attr('bgcolor', color);
+  });
+  
+}
+
+// When size is submitted by the user, call makeGrid()
+var submitQuery;
+
+submitQuery = $('input[type="submit"]')
+
+submitQuery.click(function(event) {
   event.preventDefault();
-}
-
-changeColor = () => {
-  const color = $('#colorPicker').val();
- this.style.background = color;
-}
-
-  let heightValue = heightInput.val();
-  let widthValue = widthInput.val();
- 
-  let pixelCanvas = $('#pixel_canvas');
-  pixelCanvas.children().remove(); 
- 
-for (let h = 0; h < heightValue; h++) {
-    pixelCanvas.append("<tr></tr>");
-  }
-  for (let w = 0; w < widthValue; w++) {
-    $('tr').append("<td></td>");
-  }
-}
- 
-$('table').on('click', 'td', function() {
-  $(this).css('backgroundColor', colorInput.val() );
-});
- 
-form = $('#sizePicker');
-form.submit(function(event) {
-    event.preventDefault(); 
-    makeGrid();
+  makeGrid();
 });
